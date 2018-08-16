@@ -1,7 +1,7 @@
 # Template file for 'giac'
 pkgname=giac
 version=1.4.9r59
-revision=1
+revision=2
 wrksrc="${pkgname}-${version/r*}"
 build_style=gnu-configure
 makedepends="fltk-devel gmp-devel gsl-devel lapack-devel
@@ -13,6 +13,10 @@ homepage="https://www-fourier.ujf-grenoble.fr/~parisse/giac.html"
 license="GPL-3"
 distfiles="https://www-fourier.ujf-grenoble.fr/~parisse/debian/dists/stable/main/source/${pkgname}_${version/r/-}.tar.gz"
 checksum=d3abd7924d51bdb366020bd704266f7c292ff341dc1dd5c7af3acf677cb96537
+
+case "$XBPS_TARGET_MACHINE" in
+	armv[67]l*) broken="requires unresolved shlibs libgfortran.so.5" ;;
+esac
 
 post_install() {
 	# remove duplicates

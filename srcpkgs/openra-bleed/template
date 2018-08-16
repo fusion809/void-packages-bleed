@@ -1,0 +1,29 @@
+# Template file for 'openra'
+pkgname=openra-bleed
+version=25177
+_commit=e56cb9901b3160f0deffa86ab4bfdb2310c6dc95
+revision=1
+wrksrc="OpenRA-${_commit}"
+noarch=yes
+hostmakedepends="mono unzip curl"
+makedepends="SDL2-devel lua51-devel freetype-devel libopenal-devel libgdiplus-devel unzip curl"
+depends="mono libopenal freetype xdg-utils zenity SDL2 lua51 libgdiplus"
+build_style="gnu-makefile"
+make_install_target="install install-linux-shortcuts install-linux-mime
+ install-linux-appdata install-man-page"
+make_install_args="prefix=/usr"
+homepage="http://www.openra.net"
+short_desc="An open-source implementation of the Red Alert engine"
+maintainer="Brenton Horne <brentonhorne77@gmail.com>"
+license="GPL-3"
+distfiles="https://github.com/OpenRA/OpenRA/archive/${_commit}.tar.gz"
+checksum=
+
+if [ "$CROSS_BUILD" ]; then
+	hostmakedepends+=" lua51 libgdiplus"
+fi
+
+pre_build() {
+	make VERSION="Bleed commit ${version}" version
+	make dependencies
+}
